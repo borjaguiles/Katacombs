@@ -62,5 +62,15 @@ namespace Katacombs.Tests
             var result = _katacombs.Action("Look S");
             Assert.Equal("Nothing interesting to look at there!", result[0]);
         }
+
+        [Fact]
+        public void TellPlayerTheresADoorWhenLookingNorth()
+        {
+            var zone = Substitute.For<IZone>();
+            zone.Look(Direction.N).Returns("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR");
+            _katacombs = new Katacombs(_bag, zone);
+            var result = _katacombs.Action("Look N");
+            Assert.Equal("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR", result[0]);
+        }
     }
 }
