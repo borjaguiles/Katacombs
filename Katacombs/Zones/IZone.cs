@@ -4,5 +4,6 @@ namespace Katacombs.Zones
     {
         string[] ZoneOverview();
         string Look(Direction direction);
+        IZone Open(string door);
     }
 }

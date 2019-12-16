@@ -8,12 +8,12 @@ namespace Katacombs
     public class Katacombs
     {
         private readonly IInventory _inventory;
-        private IZone _startingZone;
+        private IZone _currentZone;
 
         public Katacombs(IInventory inventory, IZone startingZone)
         {
             _inventory = inventory;
-            _startingZone = startingZone;
+            _currentZone = startingZone;
         }
 
         public string[] Action(string command)
@@ -22,10 +22,21 @@ namespace Katacombs
             if (action == GameAction.Look)
             {
                 var direction = GetDirectionFromCommand(command);
-                return new []{_startingZone.Look(direction) };
+                return new []{_currentZone.Look(direction) };
+            }
+
+            if (action == GameAction.Open)
+            {
+                _currentZone = _currentZone.Open(GetOpenedItemFromCommand(command));
+                return _currentZone.ZoneOverview();
             }
 
             return new []{"I don't understand that. English please!" };
+        }
+
+        private string GetOpenedItemFromCommand(string command)
+        {
+            return String.Join(' ', command.Split(" ").Skip(1));
         }
 
         private Direction GetDirectionFromCommand(string command)
@@ -40,7 +51,7 @@ namespace Katacombs
 
         public string[] Start()
         {
-            return _startingZone.ZoneOverview();
+            return _currentZone.ZoneOverview();
         }
     }
 }

@@ -72,5 +72,18 @@ namespace Katacombs.Tests
             var result = _katacombs.Action("Look N");
             Assert.Equal("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR", result[0]);
         }
+
+        [Fact]
+        public void MovePlayerToNextZoneWhenOpeningTheDoor()
+        {
+            var zone = Substitute.For<IZone>();
+            var breweryHall = Substitute.For<IZone>();
+            breweryHall.ZoneOverview().Returns(new[] { "Inside the Truman Brewery", "You are in a large room, in front of you is a big counter and to the left some beer kegs. \r\n There's a key dropped on the floor." });
+            zone.Open("Door").Returns(breweryHall);
+            _katacombs = new Katacombs(_bag, zone);
+            var result = _katacombs.Action("Open Door");
+            Assert.Equal("Inside the Truman Brewery", result[0]);
+            Assert.Equal("You are in a large room, in front of you is a big counter and to the left some beer kegs. \r\n There's a key dropped on the floor.", result[1]);
+        }
     }
 }

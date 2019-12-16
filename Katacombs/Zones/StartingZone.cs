@@ -11,5 +11,10 @@ namespace Katacombs.Zones
         {
             throw new System.NotImplementedException();
         }
+
+        public IZone Open(string door)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
