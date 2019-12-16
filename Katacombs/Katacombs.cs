@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Linq;
-using Katacombs.Inventories;
-using Katacombs.Zones;
+using Katacombs.Player;
 
 namespace Katacombs
 {
     public class Katacombs
     {
-        private readonly IInventory _inventory;
-        private IZone _currentZone;
+        private IPlayer _player;
 
-        public Katacombs(IInventory inventory, IZone startingZone)
+        public Katacombs(IPlayer startingPlayer)
         {
-            _inventory = inventory;
-            _currentZone = startingZone;
+            _player = startingPlayer;
         }
 
         public string[] Action(string command)
@@ -22,13 +19,12 @@ namespace Katacombs
             if (action == GameAction.Look)
             {
                 var direction = GetDirectionFromCommand(command);
-                return new []{_currentZone.Look(direction) };
+                return new []{_player.Look(direction) };
             }
 
             if (action == GameAction.Open)
             {
-                _currentZone = _currentZone.Open(GetOpenedItemFromCommand(command));
-                return _currentZone.ZoneOverview();
+                return _player.Open(GetOpenedItemFromCommand(command));
             }
 
             return new []{"I don't understand that. English please!" };
@@ -39,9 +35,9 @@ namespace Katacombs
             return String.Join(' ', command.Split(" ").Skip(1));
         }
 
-        private Direction GetDirectionFromCommand(string command)
+        private string GetDirectionFromCommand(string command)
         {
-            return Enum.Parse<Direction>(command.Split(" ")[1]);
+            return command.Split(" ")[1];
         }
 
         private GameAction GetActionFromCommand(string command)
@@ -51,7 +47,7 @@ namespace Katacombs
 
         public string[] Start()
         {
-            return _currentZone.ZoneOverview();
+            return _player.ZoneOverview();
         }
     }
 }

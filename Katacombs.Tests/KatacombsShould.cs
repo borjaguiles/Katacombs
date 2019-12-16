@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Katacombs.Inventories;
-using Katacombs.Zones;
+using Katacombs.Player;
 using NSubstitute;
 using Xunit;
 
@@ -11,18 +11,19 @@ namespace Katacombs.Tests
     {
         private Katacombs _katacombs;
         private Inventory _bag;
-        private StartingZone _startingStartingZone;
+        private StartingPlayer _startingStartingPlayer;
 
         public KatacombsShould()
         {
             _bag = new Inventory();
-            _startingStartingZone = new StartingZone();
-            _katacombs = new Katacombs(_bag, _startingStartingZone);
+            _startingStartingPlayer = new StartingPlayer(Substitute.For<IZoneConfiguration>());
+            _katacombs = new Katacombs(_startingStartingPlayer);
         }
 
         [Fact]
         public void PlayerLooksSouthThenLooksNorthOpensDoorPicksUpKeysOpensBagGoesNorthFailsLooksEastGoesEastUseKeyOpenDoor()
         {
+            _startingStartingPlayer = new StartingPlayer(ZoneBuilder.Build("StartingZone"));
             _katacombs.Start();
             _katacombs.Action("Look S");
             _katacombs.Action("Look N");
@@ -41,13 +42,13 @@ namespace Katacombs.Tests
         [Fact]
         public void TellPlayerTheIntroWhenStarting()
         {
-            var zone = Substitute.For<IZone>();
-            zone.ZoneOverview().Returns(new[]
+            var player = Substitute.For<IPlayer>();
+            player.ZoneOverview().Returns(new[]
             {
                 "LOST IN SHOREDITCH.",
                 "YOU ARE STANDING AT THE END OF BRICK LANE BEFORE A SMALL BRICK BUILDING CALLED THE OLD TRUMAN BREWERY. \r\nAROUND YOU IS A FOREST OF INDIAN RESTAURANTS. \r\nA SMALL STREAM OF CRAFTED BEER FLOWS OUT OF THE BUILDING AND DOWN A GULLY."
             });
-            _katacombs = new Katacombs(_bag, zone);
+            _katacombs = new Katacombs(player);
             var result = _katacombs.Start();
             Assert.Equal("LOST IN SHOREDITCH.", result[0]);
             Assert.Equal("YOU ARE STANDING AT THE END OF BRICK LANE BEFORE A SMALL BRICK BUILDING CALLED THE OLD TRUMAN BREWERY. \r\nAROUND YOU IS A FOREST OF INDIAN RESTAURANTS. \r\nA SMALL STREAM OF CRAFTED BEER FLOWS OUT OF THE BUILDING AND DOWN A GULLY.", result[1]);
@@ -56,9 +57,9 @@ namespace Katacombs.Tests
         [Fact]
         public void TellPlayerTheresNothingToSeeSouth()
         {
-            var zone = Substitute.For<IZone>();
-            zone.Look(Direction.S).Returns("Nothing interesting to look at there!");
-            _katacombs = new Katacombs(_bag, zone);
+            var player = Substitute.For<IPlayer>();
+            player.Look("S").Returns("Nothing interesting to look at there!");
+            _katacombs = new Katacombs(player);
             var result = _katacombs.Action("Look S");
             Assert.Equal("Nothing interesting to look at there!", result[0]);
         }
@@ -66,9 +67,9 @@ namespace Katacombs.Tests
         [Fact]
         public void TellPlayerTheresADoorWhenLookingNorth()
         {
-            var zone = Substitute.For<IZone>();
-            zone.Look(Direction.N).Returns("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR");
-            _katacombs = new Katacombs(_bag, zone);
+            var player = Substitute.For<IPlayer>();
+            player.Look("N").Returns("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR");
+            _katacombs = new Katacombs(player);
             var result = _katacombs.Action("Look N");
             Assert.Equal("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR", result[0]);
         }
@@ -76,11 +77,9 @@ namespace Katacombs.Tests
         [Fact]
         public void MovePlayerToNextZoneWhenOpeningTheDoor()
         {
-            var zone = Substitute.For<IZone>();
-            var breweryHall = Substitute.For<IZone>();
-            breweryHall.ZoneOverview().Returns(new[] { "Inside the Truman Brewery", "You are in a large room, in front of you is a big counter and to the left some beer kegs. \r\n There's a key dropped on the floor." });
-            zone.Open("Door").Returns(breweryHall);
-            _katacombs = new Katacombs(_bag, zone);
+            var player = Substitute.For<IPlayer>();
+            player.Open("Door").Returns(new[] { "Inside the Truman Brewery", "You are in a large room, in front of you is a big counter and to the left some beer kegs. \r\n There's a key dropped on the floor." });
+            _katacombs = new Katacombs(player);
             var result = _katacombs.Action("Open Door");
             Assert.Equal("Inside the Truman Brewery", result[0]);
             Assert.Equal("You are in a large room, in front of you is a big counter and to the left some beer kegs. \r\n There's a key dropped on the floor.", result[1]);
