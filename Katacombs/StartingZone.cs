@@ -7,7 +7,7 @@ namespace Katacombs
             throw new System.NotImplementedException();
         }
 
-        public string[] Start()
+        public string Look(Direction direction)
         {
             throw new System.NotImplementedException();
         }

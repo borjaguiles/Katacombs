@@ -50,5 +50,15 @@ namespace Katacombs.Tests
             Assert.Equal("LOST IN SHOREDITCH.", result[0]);
             Assert.Equal("YOU ARE STANDING AT THE END OF BRICK LANE BEFORE A SMALL BRICK BUILDING CALLED THE OLD TRUMAN BREWERY. \r\nAROUND YOU IS A FOREST OF INDIAN RESTAURANTS. \r\nA SMALL STREAM OF CRAFTED BEER FLOWS OUT OF THE BUILDING AND DOWN A GULLY.", result[1]);
         }
+
+        [Fact]
+        public void TellPlayerTheresNothingToSeeSouth()
+        {
+            var zone = Substitute.For<IZone>();
+            zone.Look(Direction.S).Returns("Nothing interesting to look at there!");
+            _katacombs = new Katacombs(_bag, zone);
+            var result = _katacombs.Action("Look S");
+            Assert.Equal("Nothing interesting to look at there!", result[0]);
+        }
     }
 }

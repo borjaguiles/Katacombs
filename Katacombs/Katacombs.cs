@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Katacombs
 {
@@ -13,9 +14,26 @@ namespace Katacombs
             _startingZone = startingZone;
         }
 
-        public string[] Action(string action)
+        public string[] Action(string command)
         {
-            return new[] {"Nothing interesting to look at there!"};
+            var action = GetActionFromCommand(command);
+            if (action == GameAction.Look)
+            {
+                var direction = GetDirectionFromCommand(command);
+                return new []{_startingZone.Look(direction) };
+            }
+
+            return new []{"I don't understand that. English please!" };
+        }
+
+        private Direction GetDirectionFromCommand(string command)
+        {
+            return Enum.Parse<Direction>(command.Split(" ")[1]);
+        }
+
+        private GameAction GetActionFromCommand(string command)
+        {
+            return Enum.Parse<GameAction>(command.Split(" ")[0]);
         }
 
         public string[] Start()
