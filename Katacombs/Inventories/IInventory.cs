@@ -1,4 +1,4 @@
-namespace Katacombs
+namespace Katacombs.Inventories
 {
     public interface IInventory
     {

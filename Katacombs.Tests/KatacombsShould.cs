@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Katacombs.Inventories;
+using Katacombs.Zones;
 using NSubstitute;
 using Xunit;
 

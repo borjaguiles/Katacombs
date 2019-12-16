@@ -1,4 +1,4 @@
-namespace Katacombs
+namespace Katacombs.Zones
 {
     public class StartingZone : IZone
     {
