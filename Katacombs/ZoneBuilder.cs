@@ -4,9 +4,13 @@ namespace Katacombs
 {
     public class ZoneBuilder
     {
-        public static ZoneConfiguration Build(string zoneName)
+        public static IZoneConfiguration Build(string zoneName)
         {
-            throw new NotImplementedException();
+            var zoneConfiguration = new ZoneConfiguration();
+            var door = new Door(Direction.N, "White Door");
+            zoneConfiguration.AddDoor(door);
+
+            return zoneConfiguration;
         }
     }
 }

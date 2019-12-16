@@ -23,7 +23,7 @@ namespace Katacombs.Tests
         [Fact]
         public void PlayerLooksSouthThenLooksNorthOpensDoorPicksUpKeysOpensBagGoesNorthFailsLooksEastGoesEastUseKeyOpenDoor()
         {
-            _startingStartingPlayer = new StartingPlayer(ZoneBuilder.Build("StartingZone"), Substitute.For<IZoneSwitcher>());
+            _startingStartingPlayer = new StartingPlayer(ZoneBuilder.Build("StartingZone"), new ZoneSwitcher());
             _katacombs.Start();
             _katacombs.Action("Look S");
             _katacombs.Action("Look N");

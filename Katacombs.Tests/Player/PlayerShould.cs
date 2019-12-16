@@ -30,6 +30,7 @@ namespace Katacombs.Tests.Zones
         public void GoToNextZoneWhenOpeningADoor()
         {
             var zoneConfig = Substitute.For<IZoneConfiguration>();
+            zoneConfig.DoesDoorExist("White Door").Returns(true);
             zoneConfig.IsDoorUnlocked("White Door").Returns(true);
             zoneConfig.GetDoorDirection("White Door").Returns(Direction.N);
 

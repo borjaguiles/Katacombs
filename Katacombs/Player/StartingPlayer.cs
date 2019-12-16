@@ -37,6 +37,11 @@ namespace Katacombs.Player
 
         public string[] Open(string door)
         {
+            if (!_startingZone.DoesDoorExist(door))
+            {
+                return new[] { "There's no door" };
+            }
+
             var doorIsUnlocked = _startingZone.IsDoorUnlocked(door);
             if (doorIsUnlocked)
             {
