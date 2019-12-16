@@ -5,10 +5,12 @@ namespace Katacombs.Player
     public class StartingPlayer : IPlayer
     {
         private IZoneConfiguration _startingZone;
+        private IZoneSwitcher _zoneSwitcher;
 
-        public StartingPlayer(IZoneConfiguration startingZone)
+        public StartingPlayer(IZoneConfiguration startingZone, IZoneSwitcher zoneSwitcher)
         {
             _startingZone = startingZone;
+            _zoneSwitcher = zoneSwitcher;
         }
         public string[] ZoneOverview()
         {
@@ -35,7 +37,19 @@ namespace Katacombs.Player
 
         public string[] Open(string door)
         {
-            throw new System.NotImplementedException();
+            var doorIsUnlocked = _startingZone.IsDoorUnlocked(door);
+            if (doorIsUnlocked)
+            {
+                return Go(_startingZone.GetDoorDirection(door));
+            }
+
+            return new []{"There's no door"};
+        }
+
+        public string[] Go(Direction direction)
+        {
+            _startingZone = _zoneSwitcher.GetNextZone(_startingZone, direction);
+            return this.ZoneOverview();
         }
     }
 }

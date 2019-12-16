@@ -16,14 +16,14 @@ namespace Katacombs.Tests
         public KatacombsShould()
         {
             _bag = new Inventory();
-            _startingStartingPlayer = new StartingPlayer(Substitute.For<IZoneConfiguration>());
+            _startingStartingPlayer = new StartingPlayer(Substitute.For<IZoneConfiguration>(), Substitute.For<IZoneSwitcher>());
             _katacombs = new Katacombs(_startingStartingPlayer);
         }
 
         [Fact]
         public void PlayerLooksSouthThenLooksNorthOpensDoorPicksUpKeysOpensBagGoesNorthFailsLooksEastGoesEastUseKeyOpenDoor()
         {
-            _startingStartingPlayer = new StartingPlayer(ZoneBuilder.Build("StartingZone"));
+            _startingStartingPlayer = new StartingPlayer(ZoneBuilder.Build("StartingZone"), Substitute.For<IZoneSwitcher>());
             _katacombs.Start();
             _katacombs.Action("Look S");
             _katacombs.Action("Look N");
