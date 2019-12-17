@@ -63,6 +63,10 @@ namespace Katacombs.Player
         public Message Take(string item)
         {
             var loot = _startingZone.GetItem(item);
+            if (loot == null)
+            {
+                return new Message("I can't do that here!");
+            }
             return new Message(loot.GetName()+ ": Taken");
         }
     }

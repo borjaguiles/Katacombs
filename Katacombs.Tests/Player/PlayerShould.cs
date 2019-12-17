@@ -3,6 +3,7 @@ using Katacombs.Inventories;
 using Katacombs.Player;
 using Katacombs.Zones;
 using NSubstitute;
+using NSubstitute.ReturnsExtensions;
 using Xunit;
 
 namespace Katacombs.Tests.Zones
@@ -55,6 +56,16 @@ namespace Katacombs.Tests.Zones
             var player = new StartingPlayer(breweryHallZone, Substitute.For<ZoneSwitcher>());
             var message = player.Take("White Key");
             Assert.Equal("White Key: Taken", message.ToString());
+        }
+
+        [Fact]
+        public void TellThePlayerItCantPickUpANonExistentItem()
+        {
+            var breweryHallZone = Substitute.For<IZoneConfiguration>();
+            breweryHallZone.GetItem("Blue Key").ReturnsNull();
+            var player = new StartingPlayer(breweryHallZone, Substitute.For<ZoneSwitcher>());
+            var message = player.Take("Blue Key");
+            Assert.Equal("I can't do that here!", message.ToString());
         }
     }
 }
