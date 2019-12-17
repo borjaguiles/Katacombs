@@ -1,4 +1,6 @@
-﻿namespace Katacombs.Zones
+﻿using System.Collections.Generic;
+
+namespace Katacombs.Zones
 {
     public interface IZoneConfiguration
     {
@@ -7,5 +9,6 @@
         bool IsDoorUnlocked(string doorName);
         bool DoesDoorExist(string doorName);
         Direction GetDoorDirection(string door);
+        string GetZoneName();
     }
 }

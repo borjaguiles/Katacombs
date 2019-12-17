@@ -12,7 +12,18 @@ namespace Katacombs.Player
     {
         public IZoneConfiguration GetNextZone(IZoneConfiguration currentZone, Direction direction)
         {
+            if (currentZone.GetZoneName() == "StartingZone" && direction == Direction.N)
+            {
+                return ZoneBuilder.Build("Truman Brewery Hall 1");
+            }
+
+            if (currentZone.GetZoneName() == "Truman Brewery Hall 1" && direction == Direction.S)
+            {
+                return ZoneBuilder.Build("StartingZone");
+            }
+
             throw new NotImplementedException();
+            
         }
     }
 }

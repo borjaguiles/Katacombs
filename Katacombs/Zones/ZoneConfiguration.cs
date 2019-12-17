@@ -7,6 +7,7 @@ namespace Katacombs.Zones
         private const string NothingInterestingToLookAtThere = "Nothing interesting to look at there!";
         private readonly ZoneDoors _zoneDoors;
         private Dictionary<Direction, Message> _looks;
+        private string _zoneName;
 
 
         public ZoneConfiguration()
@@ -45,6 +46,11 @@ namespace Katacombs.Zones
             return _zoneDoors.GetDoorDirection(door);
         }
 
+        public string GetZoneName()
+        {
+            return _zoneName;
+        }
+
         public void AddDoor(Door door)
         {
             _zoneDoors.Add(door);
@@ -53,6 +59,11 @@ namespace Katacombs.Zones
         public void AddLook(Direction direction, Message text)
         {
             _looks.Add(direction, text);
+        }
+
+        public void SetName(string zoneName)
+        {
+            _zoneName = zoneName;
         }
     }
 }
