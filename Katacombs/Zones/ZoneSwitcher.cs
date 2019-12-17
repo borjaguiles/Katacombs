@@ -22,7 +22,15 @@ namespace Katacombs.Player
                 return ZoneBuilder.Build("StartingZone");
             }
 
+            if (currentZone.GetZoneName() == "Truman Brewery Hall 1" && direction == Direction.E)
+            {
+                return ZoneBuilder.Build("Truman Brewery Hall 2");
+            }
 
+            if (currentZone.GetZoneName() == "Truman Brewery Hall 2" && direction == Direction.W)
+            {
+                return ZoneBuilder.Build("Truman Brewery Hall 1");
+            }
 
             throw new NotImplementedException();
             

@@ -18,6 +18,13 @@
                 return startingZone;
             }
 
+            if (zoneName == "Truman Brewery Hall 2")
+            {
+                var trumanBreweryHallTwo = new ZoneConfiguration();
+                trumanBreweryHallTwo.SetName(zoneName);
+                return trumanBreweryHallTwo;
+            }
+
             var trumanBreweryHallOne = new ZoneConfiguration();
             trumanBreweryHallOne.SetName(zoneName);
             return trumanBreweryHallOne;
