@@ -69,5 +69,10 @@ namespace Katacombs.Player
             }
             return new Message(loot.GetName()+ ": Taken");
         }
+
+        public Message Bag()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

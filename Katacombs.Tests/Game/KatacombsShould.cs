@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Katacombs.Inventories;
 using Katacombs.Player;
 using NSubstitute;
@@ -61,6 +62,14 @@ namespace Katacombs.Tests.Game
             player.Take("White Key").Returns(new Message("White Key: Taken"));
             var message = _katacombs.Action("Take White Key");
             Assert.Equal("White Key: Taken", message.ToString());
+        }
+
+        [Fact]
+        public void ShowThePlayersInventory()
+        {
+            player.Bag().Returns(new Message("The bag contains: A White Key"));
+            var bag = _katacombs.Action("Bag");
+            Assert.Equal("The bag contains: A White Key", bag.ToString());
         }
     }
 }

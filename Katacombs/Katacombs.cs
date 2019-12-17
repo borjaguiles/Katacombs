@@ -32,6 +32,11 @@ namespace Katacombs
                 return _player.Take(GetActionOptionFromCommand(command));
             }
 
+            if (action == GameAction.Bag)
+            {
+                return _player.Bag();
+            }
+
             throw new NotImplementedException();
         }
 
