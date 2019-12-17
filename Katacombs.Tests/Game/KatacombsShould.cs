@@ -79,5 +79,13 @@ namespace Katacombs.Tests.Game
             var message = _katacombs.Action("Go E");
             Assert.Equal("Trueman Brewery Hall 2\r\nYou are in a small room, you can see a white door in front of you.", message.ToString());
         }
+
+        [Fact]
+        public void SayThePlayerHasUsedAKey()
+        {
+            player.Use("White Key").Returns(new Message("The White Door has been unlocked"));
+            var message = _katacombs.Action("Use White Key");
+            Assert.Equal("The White Door has been unlocked", message.ToString());
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace Katacombs.Player
         Message Take(string item);
         Message Bag();
         Message Go(Direction direction);
+        Message Use(string whiteKey);
     }
 }

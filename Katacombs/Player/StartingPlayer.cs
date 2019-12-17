@@ -60,6 +60,11 @@ namespace Katacombs.Player
             return ZoneOverview();
         }
 
+        public Message Use(string item)
+        {
+            return new Message("The White Door has been unlocked");
+        }
+
         public Message Take(string item)
         {
             var loot = _startingZone.GetItem(item);

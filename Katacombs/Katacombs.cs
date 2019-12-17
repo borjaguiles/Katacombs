@@ -42,6 +42,11 @@ namespace Katacombs
                 return _player.Go(GetDirectionFromCommand(command));
             }
 
+            if (action == GameAction.Use)
+            {
+                return _player.Use(GetActionOptionFromCommand(command));
+            }
+
             throw new NotImplementedException();
         }
 
