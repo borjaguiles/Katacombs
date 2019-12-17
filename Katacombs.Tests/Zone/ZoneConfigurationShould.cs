@@ -47,5 +47,13 @@ namespace Katacombs.Tests.Zone
             var result = _zoneConfig.LookAtDirection(Direction.S);
             Assert.Equal("Nothing interesting to look at there!", result[0]);
         }
+
+        [Fact]
+        public void TellThePlayerTheresAWhiteDoorNorthOfTheStartingZone()
+        {
+            _zoneConfig = ZoneBuilder.Build("StartingZone");
+            var result = _zoneConfig.LookAtDirection(Direction.N);
+            Assert.Equal("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR", result[0]);
+        }
     }
 }
