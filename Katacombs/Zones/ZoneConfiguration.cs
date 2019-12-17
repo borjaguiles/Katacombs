@@ -54,7 +54,7 @@ namespace Katacombs.Zones
 
         public Item GetItem(string itemName)
         {
-            throw new System.NotImplementedException();
+            return new Item(itemName);
         }
 
         public void AddDoor(Door door)

@@ -10,14 +10,12 @@ namespace Katacombs.Tests.Game
         private Katacombs _katacombs;
         private Inventory _bag;
         private IPlayer player;
-        private readonly KatacombsShouldAcceptance _katacombsShouldAcceptance;
 
         public KatacombsShould()
         {
             _bag = new Inventory();
             player = Substitute.For<IPlayer>();
             _katacombs = new Katacombs(player);
-            _katacombsShouldAcceptance = new KatacombsShouldAcceptance(this);
         }
 
         [Fact]

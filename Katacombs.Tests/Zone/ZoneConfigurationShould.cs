@@ -69,5 +69,13 @@ namespace Katacombs.Tests.Zone
             var doorDirection = _zoneConfig.GetDoorDirection("Blue Door");
             Assert.Equal(Direction.Unknown, doorDirection);
         }
+
+        [Fact]
+        public void GiveThePlayerTheItemItRequested()
+        {
+            _zoneConfig = ZoneBuilder.Build("Truman Brewery Hall 1");
+            var item = _zoneConfig.GetItem("White Key");
+            Assert.Equal("White Key", item.GetName());
+        }
     }
 }
