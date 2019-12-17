@@ -13,13 +13,13 @@ namespace Katacombs
             _player = startingPlayer;
         }
 
-        public string[] Action(string command)
+        public Message Action(string command)
         {
             var action = GetActionFromCommand(command);
             if (action == GameAction.Look)
             {
                 var direction = GetDirectionFromCommand(command);
-                return new []{_player.Look(direction) };
+                return _player.Look(direction);
             }
 
             if (action == GameAction.Open)
@@ -27,7 +27,7 @@ namespace Katacombs
                 return _player.Open(GetOpenedItemFromCommand(command));
             }
 
-            return new []{"I don't understand that. English please!" };
+            return new Message("I don't understand that. English please!");
         }
 
         private string GetOpenedItemFromCommand(string command)
@@ -45,7 +45,7 @@ namespace Katacombs
             return Enum.Parse<GameAction>(command.Split(" ")[0]);
         }
 
-        public string[] Start()
+        public Message Start()
         {
             return _player.ZoneOverview();
         }

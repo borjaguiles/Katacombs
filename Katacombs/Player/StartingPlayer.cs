@@ -13,49 +13,50 @@ namespace Katacombs.Player
             _startingZone = startingZone;
             _zoneSwitcher = zoneSwitcher;
         }
-        public string[] ZoneOverview()
+        public Message ZoneOverview()
         {
             return _startingZone.LookAtDirection();
         }
 
-        public string Look(string option)
+        public Message Look(string option)
         {
             var direction = Enum.Parse<Direction>(option);
             if (direction != Direction.Unknown)
             {
-                return _startingZone.LookAtDirection(direction)[0];
+                return _startingZone.LookAtDirection(direction);
             }
 
             var item = _startingZone.LookAtItem(option);
 
-            if (!String.IsNullOrWhiteSpace(item))
+            if (!String.IsNullOrWhiteSpace(item.ToString()))
             {
                 return item;
             }
 
-            return "Nothing interesting to look at there!";
+            return new Message("Nothing interesting to look at there!");
         }
 
-        public string[] Open(string door)
+        public Message Open(string door)
         {
             if (!_startingZone.DoesDoorExist(door))
             {
-                return new[] { "There's no door" };
+                return new Message("There's no door");
             }
 
             var doorIsUnlocked = _startingZone.IsDoorUnlocked(door);
+
             if (doorIsUnlocked)
             {
                 return Go(_startingZone.GetDoorDirection(door));
             }
 
-            return new []{"There's no door"};
+            return new Message("There's no door");
         }
 
-        public string[] Go(Direction direction)
+        public Message Go(Direction direction)
         {
             _startingZone = _zoneSwitcher.GetNextZone(_startingZone, direction);
-            return this.ZoneOverview();
+            return ZoneOverview();
         }
     }
 }

@@ -6,26 +6,26 @@ namespace Katacombs.Zones
     {
         private const string NothingInterestingToLookAtThere = "Nothing interesting to look at there!";
         private readonly ZoneDoors _zoneDoors;
-        private string[] _zoneDescription;
-        private Dictionary<Direction, string> _looks;
+        private Dictionary<Direction, Message> _looks;
 
 
         public ZoneConfiguration()
         {
-            _looks = new Dictionary<Direction, string>();
+            _looks = new Dictionary<Direction, Message>();
             _zoneDoors = new ZoneDoors();
         }
 
-        public string[] LookAtDirection(Direction direction = Direction.Unknown)
+        public Message LookAtDirection(Direction direction = Direction.Unknown)
         {
-            if (direction != Direction.Unknown)
+            if (_looks.ContainsKey(direction))
             {
-                return new[] { _looks.ContainsKey(direction) ? _looks[direction] :  NothingInterestingToLookAtThere };
+                return _looks[direction];
             }
-            return _zoneDescription;
+
+            return new Message(NothingInterestingToLookAtThere);
         }
 
-        public string LookAtItem(string item)
+        public Message LookAtItem(string item)
         {
             throw new System.NotImplementedException();
         }
@@ -50,16 +50,9 @@ namespace Katacombs.Zones
             _zoneDoors.Add(door);
         }
 
-        public void AddLook(Direction direction, string[] text)
+        public void AddLook(Direction direction, Message text)
         {
-            if (direction == Direction.Unknown)
-            {
-                _zoneDescription = text;
-                return;
-            }
-            
-            _looks.Add(direction, text[0]);
-
+            _looks.Add(direction, text);
         }
     }
 }

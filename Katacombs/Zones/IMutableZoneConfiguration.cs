@@ -3,6 +3,6 @@
     public interface IMutableZoneConfiguration
     {
         void AddDoor(Door door);
-        void AddLook(Direction direction, string[] text);
+        void AddLook(Direction direction, Message text);
     }
 }
