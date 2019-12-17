@@ -77,5 +77,13 @@ namespace Katacombs.Tests.Zone
             var item = _zoneConfig.GetItem("White Key");
             Assert.Equal("White Key", item.GetName());
         }
+
+        [Fact]
+        public void GiveThePlayerNothingWhenTheItemDoesNotExist()
+        {
+            _zoneConfig = ZoneBuilder.Build("Truman Brewery Hall 1");
+            var item = _zoneConfig.GetItem("Blue Key");
+            Assert.Null(item);
+        }
     }
 }

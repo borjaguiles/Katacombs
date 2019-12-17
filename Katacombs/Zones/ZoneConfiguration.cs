@@ -54,6 +54,8 @@ namespace Katacombs.Zones
 
         public Item GetItem(string itemName)
         {
+            if (itemName != "White Key")
+                return null;
             return new Item(itemName);
         }
 
