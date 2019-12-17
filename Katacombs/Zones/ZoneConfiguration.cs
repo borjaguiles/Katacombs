@@ -42,7 +42,7 @@ namespace Katacombs.Zones
 
         public Direction GetDoorDirection(string door)
         {
-            throw new System.NotImplementedException();
+            return _zoneDoors.GetDoorDirection(door);
         }
 
         public void AddDoor(Door door)

@@ -22,5 +22,10 @@
         {
             return string.IsNullOrWhiteSpace(_keyName);
         }
+
+        public Direction GetDirection()
+        {
+            return _direction;
+        }
     }
 }

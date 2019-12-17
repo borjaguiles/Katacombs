@@ -26,5 +26,15 @@ namespace Katacombs.Zones
         {
             return _doors.Any(door => door.NameIs(doorName));
         }
+
+        public Direction GetDoorDirection(string doorName)
+        {
+            var door = _doors.FirstOrDefault(gate => gate.NameIs(doorName));
+            if (door == null)
+            {
+                return Direction.Unknown;
+            }
+            return door.GetDirection();
+        }
     }
 }
