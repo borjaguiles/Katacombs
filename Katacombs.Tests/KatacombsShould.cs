@@ -25,11 +25,12 @@ namespace Katacombs.Tests
         public void PlayerLooksSouthThenLooksNorthOpensDoorPicksUpKeysOpensBagGoesNorthFailsLooksEastGoesEastUseKeyOpenDoor()
         {
             _startingStartingPlayer = new StartingPlayer(ZoneBuilder.Build("StartingZone"), new ZoneSwitcher());
+            _katacombs = new Katacombs(_startingStartingPlayer);
             _katacombs.Start();
             _katacombs.Action("Look S");
             _katacombs.Action("Look N");
-            _katacombs.Action("Open Door");
-            _katacombs.Action("Pick Key");
+            _katacombs.Action("Open White Door");
+            _katacombs.Action("Take Key");
             _katacombs.Action("Bag");
             _katacombs.Action("Go N");
             _katacombs.Action("Look E");
