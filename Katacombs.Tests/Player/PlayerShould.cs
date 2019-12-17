@@ -67,5 +67,16 @@ namespace Katacombs.Tests.Zones
             var message = player.Take("Blue Key");
             Assert.Equal("I can't do that here!", message.ToString());
         }
+
+        [Fact]
+        public void ShowThePlayersInventory()
+        {
+            var breweryHallZone = Substitute.For<IZoneConfiguration>();
+            breweryHallZone.GetItem("White Key").Returns(new Item("White Key"));
+            var player = new StartingPlayer(breweryHallZone, Substitute.For<ZoneSwitcher>());
+            player.Take("White Key");
+            var bag = player.Bag();
+            Assert.Equal("The bag contains: A White Key", bag.ToString());
+        }
     }
 }

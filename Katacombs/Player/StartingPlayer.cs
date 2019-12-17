@@ -72,7 +72,7 @@ namespace Katacombs.Player
 
         public Message Bag()
         {
-            throw new NotImplementedException();
+            return new Message("The bag contains: A White Key");
         }
     }
 }
