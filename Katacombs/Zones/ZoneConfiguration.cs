@@ -1,17 +1,27 @@
-﻿namespace Katacombs.Zones
+﻿using System.Collections.Generic;
+
+namespace Katacombs.Zones
 {
     public class ZoneConfiguration : IZoneConfiguration, IMutableZoneConfiguration
     {
+        private const string NothingInterestingToLookAtThere = "Nothing interesting to look at there!";
         private readonly ZoneDoors _zoneDoors;
         private string[] _zoneDescription;
+        private Dictionary<Direction, string> _looks;
+
 
         public ZoneConfiguration()
         {
+            _looks = new Dictionary<Direction, string>();
             _zoneDoors = new ZoneDoors();
         }
 
         public string[] LookAtDirection(Direction direction = Direction.Unknown)
         {
+            if (direction != Direction.Unknown)
+            {
+                return new[] { _looks.ContainsKey(direction) ? _looks[direction] :  NothingInterestingToLookAtThere };
+            }
             return _zoneDescription;
         }
 
@@ -45,7 +55,11 @@
             if (direction == Direction.Unknown)
             {
                 _zoneDescription = text;
+                return;
             }
+            
+            _looks.Add(direction, text[0]);
+
         }
     }
 }
