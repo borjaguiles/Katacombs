@@ -1,4 +1,6 @@
-﻿using Katacombs.Player;
+﻿using System.Collections.Generic;
+using Katacombs.Inventories;
+using Katacombs.Player;
 using Katacombs.Zones;
 using NSubstitute;
 using Xunit;
@@ -43,6 +45,16 @@ namespace Katacombs.Tests.Zones
             var player = new StartingPlayer(zoneConfig, zoneSwitcher);
             var message = player.Open("White Door");
             Assert.Equal("Inside the Truman Brewery\r\nYou are in a large room, in front of you is a big counter and to the left some beer kegs. \r\n There's a key dropped on the floor.", message.ToString());
+        }
+
+        [Fact]
+        public void TakeItemFromTheFloor()
+        {
+            var breweryHallZone = Substitute.For<IZoneConfiguration>();
+            breweryHallZone.GetItem("White Key").Returns(new Item("White Key"));
+            var player = new StartingPlayer(breweryHallZone, Substitute.For<ZoneSwitcher>());
+            var message = player.Take("White Key");
+            Assert.Equal("White Key: Taken", message.ToString());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Katacombs.Inventories;
 
 namespace Katacombs.Zones
 {
@@ -10,5 +11,6 @@ namespace Katacombs.Zones
         bool DoesDoorExist(string doorName);
         Direction GetDoorDirection(string door);
         string GetZoneName();
+        Item GetItem(string itemName);
     }
 }

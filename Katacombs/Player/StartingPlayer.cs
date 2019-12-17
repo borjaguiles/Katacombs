@@ -1,4 +1,5 @@
 using System;
+using Katacombs.Inventories;
 using Katacombs.Zones;
 
 namespace Katacombs.Player
@@ -61,7 +62,8 @@ namespace Katacombs.Player
 
         public Message Take(string item)
         {
-            throw new NotImplementedException();
+            var loot = _startingZone.GetItem(item);
+            return new Message(loot.GetName()+ ": Taken");
         }
     }
 }

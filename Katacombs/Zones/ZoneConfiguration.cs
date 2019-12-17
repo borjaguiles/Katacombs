@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Katacombs.Inventories;
 
 namespace Katacombs.Zones
 {
@@ -49,6 +50,11 @@ namespace Katacombs.Zones
         public string GetZoneName()
         {
             return _zoneName;
+        }
+
+        public Item GetItem(string itemName)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void AddDoor(Door door)
