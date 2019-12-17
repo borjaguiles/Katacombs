@@ -32,8 +32,12 @@ namespace Katacombs.Player
                 return ZoneBuilder.Build("Truman Brewery Hall 1");
             }
 
+            if (currentZone.GetZoneName() == "Truman Brewery Hall 2" && direction == Direction.N)
+            {
+                return ZoneBuilder.Build("Truman Brewery Warehouse");
+            }
+
             throw new NotImplementedException();
-            
         }
     }
 }

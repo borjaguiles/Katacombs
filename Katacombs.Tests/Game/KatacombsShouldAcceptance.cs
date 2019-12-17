@@ -21,7 +21,7 @@ namespace Katacombs.Tests.Game
             _katacombs.Action("Bag");
             _katacombs.Action("Go E");
             _katacombs.Action("Use Key");
-            var message = _katacombs.Action("Open Door");
+            var message = _katacombs.Action("Open White Door");
             Assert.Equal("Inside Truman Brewery's warehouse.\r\nYou're inside a warehouse filled with rows of beer kegs. You smell the putrid odor of death.", message.ToString());
         }
     }

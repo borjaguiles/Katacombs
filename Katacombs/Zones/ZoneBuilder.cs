@@ -22,7 +22,19 @@
             {
                 var trumanBreweryHallTwo = new ZoneConfiguration();
                 trumanBreweryHallTwo.SetName(zoneName);
+                var door = new Door(Direction.N, "White Door");
+                trumanBreweryHallTwo.AddDoor(door);
                 return trumanBreweryHallTwo;
+            }
+
+            if (zoneName == "Truman Brewery Warehouse")
+            {
+                var trumanBreweryWarehouse = new ZoneConfiguration();
+                trumanBreweryWarehouse.SetName(zoneName);
+                var overview = new Message("Inside Truman Brewery's warehouse.",
+                    "You're inside a warehouse filled with rows of beer kegs. You smell the putrid odor of death.");
+                trumanBreweryWarehouse.AddLook(Direction.Unknown, overview);
+                return trumanBreweryWarehouse;
             }
 
             var trumanBreweryHallOne = new ZoneConfiguration();
