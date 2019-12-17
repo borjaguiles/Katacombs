@@ -5,5 +5,6 @@ namespace Katacombs.Player
         Message ZoneOverview();
         Message Look(string option);
         Message Open(string door);
+        Message Take(string item);
     }
 }

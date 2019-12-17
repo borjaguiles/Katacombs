@@ -58,5 +58,10 @@ namespace Katacombs.Player
             _startingZone = _zoneSwitcher.GetNextZone(_startingZone, direction);
             return ZoneOverview();
         }
+
+        public Message Take(string item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

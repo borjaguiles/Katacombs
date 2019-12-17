@@ -12,20 +12,20 @@ namespace Katacombs.Tests
     {
         private Katacombs _katacombs;
         private Inventory _bag;
-        private StartingPlayer _startingStartingPlayer;
+        private IPlayer player;
 
         public KatacombsShould()
         {
             _bag = new Inventory();
-            _startingStartingPlayer = new StartingPlayer(Substitute.For<IZoneConfiguration>(), Substitute.For<IZoneSwitcher>());
-            _katacombs = new Katacombs(_startingStartingPlayer);
+            player = Substitute.For<IPlayer>();
+            _katacombs = new Katacombs(player);
         }
 
         [Fact]
         public void PlayerLooksSouthThenLooksNorthOpensDoorPicksUpKeysOpensBagGoesNorthFailsLooksEastGoesEastUseKeyOpenDoor()
         {
-            _startingStartingPlayer = new StartingPlayer(ZoneBuilder.Build("StartingZone"), new ZoneSwitcher());
-            _katacombs = new Katacombs(_startingStartingPlayer);
+            player = new StartingPlayer(ZoneBuilder.Build("StartingZone"), new ZoneSwitcher());
+            _katacombs = new Katacombs(player);
             _katacombs.Start();
             _katacombs.Action("Look S");
             _katacombs.Action("Look N");
@@ -43,10 +43,9 @@ namespace Katacombs.Tests
         [Fact]
         public void TellPlayerTheIntroWhenStarting()
         {
-            var player = Substitute.For<IPlayer>();
+            
             player.ZoneOverview().Returns(new Message("LOST IN SHOREDITCH.",
                 "YOU ARE STANDING AT THE END OF BRICK LANE BEFORE A SMALL BRICK BUILDING CALLED THE OLD TRUMAN BREWERY. \r\nAROUND YOU IS A FOREST OF INDIAN RESTAURANTS. \r\nA SMALL STREAM OF CRAFTED BEER FLOWS OUT OF THE BUILDING AND DOWN A GULLY."));
-            _katacombs = new Katacombs(player);
             var message = _katacombs.Start();
             Assert.Equal("LOST IN SHOREDITCH.\r\nYOU ARE STANDING AT THE END OF BRICK LANE BEFORE A SMALL BRICK BUILDING CALLED THE OLD TRUMAN BREWERY. \r\nAROUND YOU IS A FOREST OF INDIAN RESTAURANTS. \r\nA SMALL STREAM OF CRAFTED BEER FLOWS OUT OF THE BUILDING AND DOWN A GULLY.", message.ToString());
         }
@@ -54,9 +53,8 @@ namespace Katacombs.Tests
         [Fact]
         public void TellPlayerTheresNothingToSeeSouth()
         {
-            var player = Substitute.For<IPlayer>();
+            
             player.Look("S").Returns(new Message("Nothing interesting to look at there!"));
-            _katacombs = new Katacombs(player);
             var message = _katacombs.Action("Look S");
             Assert.Equal("Nothing interesting to look at there!", message.ToString());
         }
@@ -64,9 +62,8 @@ namespace Katacombs.Tests
         [Fact]
         public void TellPlayerTheresADoorWhenLookingNorth()
         {
-            var player = Substitute.For<IPlayer>();
+            
             player.Look("N").Returns(new Message("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR"));
-            _katacombs = new Katacombs(player);
             var message = _katacombs.Action("Look N");
             Assert.Equal("I CAN SEE A BRICK BUILDING WITH A SIGN SAYING \"TRUMAN BREWERY\" AND A WOODEN WHITE DOOR", message.ToString());
         }
@@ -74,11 +71,18 @@ namespace Katacombs.Tests
         [Fact]
         public void MovePlayerToNextZoneWhenOpeningTheDoor()
         {
-            var player = Substitute.For<IPlayer>();
+            
             player.Open("Door").Returns(new Message("Inside the Truman Brewery", "You are in a large room, in front of you is a big counter and to the left some beer kegs. \r\n There's a key dropped on the floor."));
-            _katacombs = new Katacombs(player);
             var message = _katacombs.Action("Open Door");
             Assert.Equal("Inside the Truman Brewery\r\nYou are in a large room, in front of you is a big counter and to the left some beer kegs. \r\n There's a key dropped on the floor.", message.ToString());
+        }
+
+        [Fact]
+        public void PlayerTakesKeyFromTheFloor()
+        {
+            player.Take("White Key").Returns(new Message("White Key: Taken"));
+            var message = _katacombs.Action("Take White Key");
+            Assert.Equal("White Key: Taken", message.ToString());
         }
     }
 }

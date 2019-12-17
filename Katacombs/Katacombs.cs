@@ -24,13 +24,18 @@ namespace Katacombs
 
             if (action == GameAction.Open)
             {
-                return _player.Open(GetOpenedItemFromCommand(command));
+                return _player.Open(GetActionOptionFromCommand(command));
             }
 
-            return new Message("I don't understand that. English please!");
+            if (action == GameAction.Take)
+            {
+                return _player.Take(GetActionOptionFromCommand(command));
+            }
+
+            throw new NotImplementedException();
         }
 
-        private string GetOpenedItemFromCommand(string command)
+        private string GetActionOptionFromCommand(string command)
         {
             return String.Join(' ', command.Split(" ").Skip(1));
         }
