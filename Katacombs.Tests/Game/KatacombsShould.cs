@@ -71,5 +71,13 @@ namespace Katacombs.Tests.Game
             var bag = _katacombs.Action("Bag");
             Assert.Equal("The bag contains: A White Key", bag.ToString());
         }
+
+        [Fact]
+        public void MoveThePlayerToTheNextZone()
+        {
+            player.Go(Direction.E).Returns(new Message("Trueman Brewery Hall 2", "You are in a small room, you can see a white door in front of you."));
+            var message = _katacombs.Action("Go E");
+            Assert.Equal("Trueman Brewery Hall 2\r\nYou are in a small room, you can see a white door in front of you.", message.ToString());
+        }
     }
 }

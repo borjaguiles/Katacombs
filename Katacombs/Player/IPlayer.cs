@@ -7,5 +7,6 @@ namespace Katacombs.Player
         Message Open(string door);
         Message Take(string item);
         Message Bag();
+        Message Go(Direction direction);
     }
 }

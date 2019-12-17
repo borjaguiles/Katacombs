@@ -18,7 +18,7 @@ namespace Katacombs
             var action = GetActionFromCommand(command);
             if (action == GameAction.Look)
             {
-                var direction = GetDirectionFromCommand(command);
+                var direction = GetActionOptionFromCommand(command);
                 return _player.Look(direction);
             }
 
@@ -37,6 +37,11 @@ namespace Katacombs
                 return _player.Bag();
             }
 
+            if (action == GameAction.Go)
+            {
+                return _player.Go(GetDirectionFromCommand(command));
+            }
+
             throw new NotImplementedException();
         }
 
@@ -45,9 +50,9 @@ namespace Katacombs
             return String.Join(' ', command.Split(" ").Skip(1));
         }
 
-        private string GetDirectionFromCommand(string command)
+        private Direction GetDirectionFromCommand(string command)
         {
-            return command.Split(" ")[1];
+            return Enum.Parse<Direction>(command.Split(" ")[1]);
         }
 
         private GameAction GetActionFromCommand(string command)

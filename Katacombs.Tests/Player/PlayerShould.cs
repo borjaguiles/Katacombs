@@ -78,5 +78,7 @@ namespace Katacombs.Tests.Zones
             var bag = player.Bag();
             Assert.Equal("The bag contains: A White Key", bag.ToString());
         }
+
+
     }
 }

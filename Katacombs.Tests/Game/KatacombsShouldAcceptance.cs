@@ -19,8 +19,6 @@ namespace Katacombs.Tests.Game
             _katacombs.Action("Open White Door");
             _katacombs.Action("Take Key");
             _katacombs.Action("Bag");
-            _katacombs.Action("Go N");
-            _katacombs.Action("Look E");
             _katacombs.Action("Go E");
             _katacombs.Action("Use Key");
             var message = _katacombs.Action("Open Door");
