@@ -79,6 +79,17 @@ namespace Katacombs.Tests.Zones
             Assert.Equal("The bag contains: A White Key", bag.ToString());
         }
 
-
+        [Fact]
+        public void GoToTheNextZone()
+        {
+            var breweryHallZone = Substitute.For<IZoneConfiguration>();
+            var zoneSwitcher = Substitute.For<IZoneSwitcher>();
+            var breweryHall2Zone = Substitute.For<IZoneConfiguration>();
+            breweryHall2Zone.LookAtDirection().Returns(new Message("Truman Brewery Hall 2", "You are in a small room, you can see a white door in front of you."));
+            zoneSwitcher.GetNextZone(breweryHallZone, Direction.E).Returns(breweryHall2Zone);
+            var player = new StartingPlayer(breweryHallZone, zoneSwitcher);
+            var message = player.Go(Direction.E);
+            Assert.Equal("Truman Brewery Hall 2\r\nYou are in a small room, you can see a white door in front of you.", message.ToString());
+        }
     }
 }
