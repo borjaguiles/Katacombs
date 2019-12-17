@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Katacombs.Inventories;
 using Katacombs.Player;
+using Katacombs.Zones;
 using NSubstitute;
 using Xunit;
 

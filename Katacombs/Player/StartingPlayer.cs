@@ -1,4 +1,5 @@
 using System;
+using Katacombs.Zones;
 
 namespace Katacombs.Player
 {

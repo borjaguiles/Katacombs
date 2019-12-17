@@ -1,17 +1,9 @@
-﻿namespace Katacombs
+﻿namespace Katacombs.Zones
 {
-    public interface IZoneConfiguration
-    {
-        string[] LookAtDirection(Direction direction = Direction.Unknown);
-        string LookAtItem(string item);
-        bool IsDoorUnlocked(string doorName);
-        bool DoesDoorExist(string doorName);
-        Direction GetDoorDirection(string door);
-    }
-
     public class ZoneConfiguration : IZoneConfiguration, IMutableZoneConfiguration
     {
         private readonly ZoneDoors _zoneDoors;
+        private string[] _zoneDescription;
 
         public ZoneConfiguration()
         {
@@ -20,7 +12,7 @@
 
         public string[] LookAtDirection(Direction direction = Direction.Unknown)
         {
-            throw new System.NotImplementedException();
+            return _zoneDescription;
         }
 
         public string LookAtItem(string item)
@@ -46,6 +38,14 @@
         public void AddDoor(Door door)
         {
             _zoneDoors.Add(door);
+        }
+
+        public void AddLook(Direction direction, string[] text)
+        {
+            if (direction == Direction.Unknown)
+            {
+                _zoneDescription = text;
+            }
         }
     }
 }

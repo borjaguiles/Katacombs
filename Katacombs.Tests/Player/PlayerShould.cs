@@ -1,4 +1,5 @@
 ﻿using Katacombs.Player;
+using Katacombs.Zones;
 using NSubstitute;
 using Xunit;
 
